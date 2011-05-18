@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-1.5.1.js"></script>
+    <script src="ui/jquery.ui.core.js"></script>
+    <script src="ui/jquery.ui.widget.js"></script>
+    <script src="ui/jquery.ui.mouse.js"></script>
+    <script src="ui/jquery.ui.draggable.js"></script>
+    <script src="jquery-collision.js"></script>
+    <script src="jquery-ui-draggable-collision.js"></script>
+    <style>
+      .draggable { background-color: rgba( 0, 0, 0, 0.5 );
+		               filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#88000000, endColorstr=#88000000);
+		               position: absolute;
+		  }
+      .collider  { background-color: #ff0000; position: absolute; }
+      .obstacle  { background-color: #888888; }
+      .restraint { background-color: #00ff00; }
+      .collider2  { background-color: #ff0000; position: absolute; }
+      .obstacle2  { background-color: #888888; }
+      .restraint2 { background-color: #00ff00; }
+      #board,
+      #board2    { background-color: #888888; position: relative; float: left; } #board  *, #board2 *   { position: absolute; }
+    </style>
+    <script>
+      function resetPlugin()
+      {
+        $( ".draggable" ).draggable({ collider: ".collider", collisionVisualDebug: $("#debug").val()=="true",
+	                                    obstacle: ".obstacle", preventCollision: true, 
+                                      restraint: ".restraint", preventProtrusion: true,
+
+				                              multipleCollisionInteractions: [ { collider: ".collider2",
+				                                                                 obstacle: ".obstacle2", preventCollision: true,
+									                                                       restraint: ".restraint2", preventProtrusion: true } ]
+				    });
+      }
+
+      $(function() {
+        resetPlugin();
+      });
+
+      function onDebugChange(event) { resetPlugin(); }
+    </script>
+  </head>
+  <body>
+    <h2>Drag the gray box containing multiple kinds of red colliders</h2>
+    <h3>Note that they navigate around inside their respective green areas.</h3>
+    <h3>Debugging shows the process of "finding a spot" for the colliders..</h3>
+    <b>Debug Visualization:&nbsp;</b>
+    <select id="debug" onchange="onDebugChange(event)">
+      <option value="false">false</option>
+      <option value="true">true</option>
+    </select><br />
+    <div style="position: absolute;">
+      <div id="board" style="left:  0px; top:  0px; width:400px; height:400px">
+        <div class="restraint" style="left: 50px; top: 50px; width:300px; height:300px;">
+          <div class="obstacle" style="left:  0px; top:  0px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle" style="left: 50px; top: 50px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle" style="left: 50px; top:150px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle" style="left:250px; top:  0px; width: 50px; height: 50px;" ></div>
+        </div>
+      </div>
+      <div id="board2" style="left: 50px; top:  0px; width:400px; height:400px">
+        <div class="restraint2" style="left: 50px; top: 50px; width:300px; height:300px;">
+          <div class="obstacle2" style="left:150px; top:  0px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle2" style="left:150px; top:250px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle2" style="left:200px; top:150px; width: 50px; height: 50px;" ></div>
+          <div class="obstacle2" style="left:250px; top:100px; width: 50px; height: 50px;" ></div>
+        </div>
+      </div>
+      <div class="draggable ui-widget-content" style="left:200px; top:200px; width:550px; height:100px;">
+        <div class="collider"  style="left: 50px; top:  0px; width: 50px; height: 50px;" ></div>
+        <div class="collider"  style="left:  0px; top: 50px; width: 50px; height: 50px;" ></div>
+        <div class="collider2" style="left:500px; top:  0px; width: 50px; height: 50px;" ></div>
+        <div class="collider2" style="left:450px; top: 50px; width: 50px; height: 50px;" ></div>
+      </div>
+    </div>
+  </body>
+</html>
