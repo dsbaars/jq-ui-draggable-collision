@@ -1,4 +1,4 @@
-JQuery Collision
+JQuery UI Draggable Collision
 
 INSTALLATION
 
@@ -28,6 +28,17 @@ ACTIVATION
   $(selector).draggable( { multipleCollisionInteractions: [ /* list of sets of options, see below */ ] } )
 
 EVENTS
+
+All events are UI events, and bindable just like "drag":
+
+  $(draggable).bind(
+    "collision", 
+    function(event,ui) { 
+      // $(this) is the draggable
+      // event is one of the below types, see them for details and event.* contents
+      // ui is the same as in "drag" et al
+    }
+  );
 
 - precollision
 
@@ -98,7 +109,10 @@ OPTIONS
   to apply them simultaneously to a single draggable selector. Why would you want to do this? This allows you to have different classes
   of interactions. So for example, a single draggable could contain blue blocks that only collide with blue obstacles, AND ALSO red
   blocks that only interact with red obstacles. If this option were not available, you couldn't have two different things going on at
-  the same time. But in the given example, red blocks would ignore blue obstacles and vice versa.
+  the same time. But in the given example, red blocks would ignore blue obstacles and vice versa. For example:
+
+  $(draggable).draggable( multipleCollisionInteractions: [ { collider:  ".redCollider", obstacle:  ".redObstacle", preventCollision: true },
+                                                           { collider: ".blueCollider", obstacle: ".blueObstacle", preventCollision: true } ] );
 
 - preventCollision: true
 
@@ -114,7 +128,9 @@ OPTIONS
 
 CARRY-OVER OPTIONS
 
-Some options have been carried over from jquery-collision, and affect all collisions during the dragging process
+Some options have been carried over from jquery-collision, and affect all collisions during the dragging process. For example:
+
+  $(draggable).draggable( { obstacle: ".obstacle", relative: "collider", directionData: "ddata" } );
 
 - relative: "body", "collider", "obstacle", or any selector
 
@@ -145,7 +161,7 @@ DOCUMENTATION
 
 - For more details, see https://sourceforge.net/apps/mediawiki/jquidragcollide/
 
-DEBUGGING OPTIONS:
+DEBUGGING OPTIONS
 
 - collisionVisualDebug: true
 
