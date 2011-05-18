@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-1.5.1.js"></script>
+    <script src="ui/jquery.ui.core.js"></script>
+    <script src="ui/jquery.ui.widget.js"></script>
+    <script src="ui/jquery.ui.mouse.js"></script>
+    <script src="ui/jquery.ui.draggable.js"></script>
+    <script src="jquery-collision.js"></script>
+    <script src="jquery-ui-draggable-collision.js"></script>
+    <style>
+      .draggable { width: 120px; height: 120px; margin: 0; position: absolute; background-color: #0000ff; }
+      .obstacle  { width: 100px; height: 100px; margin: 0; position: absolute; background-color: #ff0000; }
+      .restraint { width: 200px; height: 100px; margin: 0; position: absolute; background-color: #00ff00; }
+      .protrusion   { background-color: transparent; pointer-events: none; position: absolute; border: 1px solid black; margin: -1px; }
+      .collision    { background-color: #00ffff;     pointer-events: none; position: absolute;                                        }
+      #board { width: 400px; height: 300px; background-color: #888888; border: 0; border-collapse: collapse; margin: 0; position: absolute; }
+      #a { padding: 5px; }
+      #c { margin: 5px; }
+    </style>
+    <script>
+      function clearCollision(event,ui) { $(".collision").remove(); }
+      function handleCollision(event,ui)
+      {
+        $( event.collision ).addClass("collision").each( function(){ var d = $(this).data("direction"); if(d) $("<b>"+d+"</b>").appendTo($(this));
+	                                                                    $(this).appendTo("body"); } );
+      }
+      function clearProtrusion(event,ui) { $(".protrusion").remove(); }
+      function handleProtrusion(event,ui)
+      {
+        $( event.collision ).addClass("protrusion").each( function(){ var d = $(this).data("direction"); if(d) $("<b>"+d+"</b>").appendTo($(this));
+	                                                                    $(this).appendTo("body"); } );
+      }
+      $(function() {
+            $( ".draggable" ).each(function(){$(this).draggable({ containment: "#board", obstacle: ".obstacle", restraint: ".restraint",
+                                                                  directionData: "direction", relative: "body" });});
+            $( "#b" ).bind( "precollision",  clearCollision );
+            $( "#b" ).bind( "preprotrusion", clearProtrusion );
+            $( "#b" ).bind( "collision",    handleCollision );
+            $( "#b" ).bind( "protrusion",   handleProtrusion );
+      });
+    </script>
+  </head>
+  <body>
+    <h2>Drag blue block outside green and on top of reds.</h2>
+    <h3>Note that green restraint has 5px padding, and left red obstacle has 5px margins.</h3>
+    <h3>The collisions between blue and red are hilighted in turquoise and contain the directionData for the collision.</h3>
+    <h3>The protrusions of blue from within green are bordered in black and contain the directionData for the protrusion.</h3>
+    <div id="board">
+      <div class="restraint"                   style="left: 50px; top: 20px;"                          id="a"></div>
+      <div class="draggable ui-widget-content" style="left:100px; top: 20px;"                          id="b" ></div>
+      <div class="obstacle"                    style="left: 20px; top:160px;"                          id="c" ></div>
+      <div class="obstacle"                    style="left:170px; top:170px;width:130px;height:130px;" id="d" ></div>
+    </div>
+  </body>
+</html>
