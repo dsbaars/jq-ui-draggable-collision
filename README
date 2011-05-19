@@ -1,12 +1,12 @@
-JQuery UI Draggable Collision
+=JQuery UI Draggable Collision=
 
-INSTALLATION
+==INSTALLATION==
 
-- Copy jquery-ui-draggable-collision.js or any specific or minified version of jquery-ui-draggable-collision(-x.x.x)(.min).js into your javascript directory
-- Make sure that jquery 1.5.1 or later is somewhere accessible
-- Make sure that jqueryui 1.8.12 or later is somewhere accessible
-- Make sure that jquery-collision 1.0.0 or later is somewhere accessible
-- Load jquery-ui-draggable-collision and its dependencies:
+* Copy jquery-ui-draggable-collision.js or any specific or minified version of jquery-ui-draggable-collision(-x.x.x)(.min).js into your javascript directory
+* Make sure that jquery 1.5.1 or later is somewhere accessible
+* Make sure that jqueryui 1.8.12 or later is somewhere accessible
+* Make sure that jquery-collision 1.0.0 or later is somewhere accessible
+* Load jquery-ui-draggable-collision and its dependencies:
   <script src="jquery-1.5.1.js"></script>
   <script src="ui/jquery.ui.core.js"></script>
   <script src="ui/jquery.ui.widget.js"></script>
@@ -14,12 +14,12 @@ INSTALLATION
   <script src="ui/jquery.ui.draggable.js"></script>
   <script src="jquery-collision-1.0.0.js"></script>
   <script src="jquery-ui-draggable-collision-1.0.0.js"></script>
-- After that, there are several new features available for $(selector).draggable(), and 6 new events for $(selector).bind()
+* After that, there are several new features available for $(selector).draggable(), and 6 new events for $(selector).bind()
 
-ACTIVATION
+==ACTIVATION==
 
-- In order for any of the features of JQuery UI Draggable Collision to work, including the new events, one or more of the following
-  options must be used during the draggable plugin setup for a given selector:
+In order for any of the features of JQuery UI Draggable Collision to work, including the new events, one or more of the following
+options must be used during the draggable plugin setup for a given selector:
 
   $(selector).draggable( { obstacle: some_obstacle_selector } )
 
@@ -27,20 +27,20 @@ ACTIVATION
 
   $(selector).draggable( { multipleCollisionInteractions: [ /* list of sets of options, see below */ ] } )
 
-EVENTS
+==EVENTS==
 
 All events are UI events, and bindable just like "drag":
 
-  $(draggable).bind(
-    "collision", 
-    function(event,ui) { 
+  $(draggable).bind( 
+    "collision",
+    function(event,ui) {
       // $(this) is the draggable
       // event is one of the below types, see them for details and event.* contents
       // ui is the same as in "drag" et al
     }
   );
 
-- precollision
+* precollision
 
   If there are any obstacles listed, all colliders that have obstacles get a precollision event at each drag step (start, drag, and stop)
   just before the actual collision-detection is done. The reason for the PRE-collision event is in case you need to make adjustments to
@@ -50,40 +50,40 @@ All events are UI events, and bindable just like "drag":
   event.collider = the individual collider being checked for collision
   
   event.obstacle = the individual obstacle being checked for collision
-
+  
   event.collisionType = "collision" or "protrusion"
 
-- preprotrusion
+* preprotrusion
 
   If any colliders have restraints listed, they get the same kind of event as precollision above. Same event data available.
 
-- postcollision
+* postcollision
 
   Same as precollision, but after the collision-detection and events, for each drag step (start, drag, and stop).
 
-- postprotrusion
+* postprotrusion
 
   Same as postcollision, but for colliders with protrusions.
 
-- collision
+* collision
 
   *IF* there is a collision between a collider and an obstacle, there is a collision event sent to the collider. It contains the same
   information as the pre- and post-collision events, but also:
 
   event.collision = the $("<div />") collision object located at the overlap coordinates
   
-- protrusion
+* protrusion
 
   *IF* there is a protrusion of a collider from a restraint, there is a collision event sent to the collider. It contains the same
   information as the pre- and post-collision events, but also:
 
   event.collision = the $("<div />") collision object located at the overlap coordinates
-
+  
   event.obstacle = restraint, just a reminder that it's not a separate event.restraint variable
   
-OPTIONS
+==OPTIONS==
 
-- collider: $("any selector")
+* collider: $("any selector")
 
   Normally, the default is for the draggable itself to be the collider. It's the thing that registers collisions with obstacles or
   protrusions from restraints. However, if you specify a selector here, then any *children* of the draggable (or itself) that matches
@@ -95,15 +95,15 @@ OPTIONS
   A reminder: though "collider" objects have to physically be children of the draggable, the obstacles do not. (And should not.) In
   fact, obstacles do not need to be siblings of draggable - only the global position of them makes a difference.
 
-- obstacle: $("any selector")
+* obstacle: $("any selector")
 
   This is the selector used to determine the things that the collider(s) might collide with.
 
-- restraint: $("any selector")
+* restraint: $("any selector")
 
   This is the selector used to determine the things that the collider(s) might protrude from.
 
-- multipleCollisionInteractions: [ { /*options*/ }, {}, {}, ... ]
+* multipleCollisionInteractions: [ { /*options*/ }, {}, {}, ... ]
 
   Here's where it gets cool. You can specify an array of objects that contain any or all of the jquery-ui-draggable-collision options,
   to apply them simultaneously to a single draggable selector. Why would you want to do this? This allows you to have different classes
@@ -114,7 +114,7 @@ OPTIONS
   $(draggable).draggable( multipleCollisionInteractions: [ { collider:  ".redCollider", obstacle:  ".redObstacle", preventCollision: true },
                                                            { collider: ".blueCollider", obstacle: ".blueObstacle", preventCollision: true } ] );
 
-- preventCollision: true
+* preventCollision: true
 
   When this is set, the colliders will try very, very hard not to ever overlap with any specified obstacle. I say very, very hard
   because if it starts out already overlapping, and the algorithm for "finding a nice place to fit" doesn't find a spot within a reasonable
@@ -122,48 +122,44 @@ OPTIONS
   send out collision events for the forced collisions. However, in most reasonable cases, the whole draggable will "flow around" the
   obstacles smoothly.
 
-- preventProtrusion: true
+* preventProtrusion: true
 
   When this is set, the colliders stay within their restraints. Again with the above caveat, in case it's given an impossible situation.
 
-CARRY-OVER OPTIONS
+==CARRY-OVER OPTIONS==
 
 Some options have been carried over from jquery-collision, and affect all collisions during the dragging process. For example:
 
   $(draggable).draggable( { obstacle: ".obstacle", relative: "collider", directionData: "ddata" } );
 
-- relative: "body", "collider", "obstacle", or any selector
+* relative: "body", "collider", "obstacle", or any selector
 
   The event.collision object will be relative to this, in the same way that jquery-collision works.
 
-- colliderData: "some_string"
+* colliderData: "some_string"
 
   Somewhat redundant, since event.collider contains this info, but this places the $(collider) in $(collision).data("some_string")
 
-- obstacleData: "some_string"
+* obstacleData: "some_string"
 
   Somewhat redundant, since event.obstacle contains this info, but this places the $(obstacle) in $(collision).data("some_string")
 
-- directionData: "some_string"
+* directionData: "some_string"
 
   This places the direction information in $(collision).data("some_string"). See jquery-collision for more details.
 
-- NOTE: "as" has not been carried over - it is always a "<div />"
+* NOTE: "as" has not been carried over - it is always a "<div />"
 
-- NOTE: "mode" has not been carried over - it is set by using "obstacle" and "restraint"
+* NOTE: "mode" has not been carried over - it is set by using "obstacle" and "restraint"
 
-EXAMPLES
+==EXAMPLES==
 
-- Make sure that jquery-ui-draggable-collision.js, jquery-collision.js, jquery-1.5.1.js and ui/jquery.ui.*.js are in the same directory as the examples
-- Load the examples up in a browser
+* Make sure that jquery-ui-draggable-collision.js, jquery-collision.js, jquery-1.5.1.js and ui/jquery.ui.*.js are in the same directory as the examples
+* Load the examples up in a browser
 
-DOCUMENTATION
+==DEBUGGING OPTIONS==
 
-- For more details, see https://sourceforge.net/apps/mediawiki/jquidragcollide/
-
-DEBUGGING OPTIONS
-
-- collisionVisualDebug: true
+* collisionVisualDebug: true
 
   When this is set, it appends transparent divs to the end of the body tag during dragging, that correspond with the prevention mechanism. This
   slows it down a bit, and should only be used for debugging, but it's there if needed. Obstacles are bordered with black, restraints are
