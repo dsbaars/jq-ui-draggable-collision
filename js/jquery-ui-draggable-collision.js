@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011 Djuri Baars
+Copyright (c) 2014 Djuri Baars
 Copyright (c) 2011 Sean Cusack
 
 MIT-LICENSE:
@@ -25,8 +25,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 (function($){
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Default settings
 	var DEBUG = false;
 	var VISUAL_DEBUG = DEBUG;
@@ -43,11 +41,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	$.ui.draggable.prototype.options.collisionVisualDebug = false;
 	$.ui.draggable.prototype.options.multipleCollisionInteractions = [];
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
 	// Plugin setup
-	//
-
 	$.ui.plugin.add( "draggable", "obstacle", {
 		create: function(event,ui){       handleInit   .call( this, event, ui ); },
 		start: function(event,ui){        handleStart  .call( this, event, ui ); } ,
@@ -780,7 +774,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	function delta( collisions, containments, cache )
 	{
 		var c = collisions.concat(containments).sort( collisionComparison );
-		if( VISUAL_DEBUG ) { if(!cache.deltanum){ cache.deltanum = 1; } };
+		if( VISUAL_DEBUG ) { if(!cache.deltanum){ cache.deltanum = 1; } }
 		if( DEBUG ) { console.log( "collisions, in order: ", c.map(function(e,i,a){return e.collisionCoords.hash();}).join(",") ); }
 		while( c.length > 0 )
 		{
