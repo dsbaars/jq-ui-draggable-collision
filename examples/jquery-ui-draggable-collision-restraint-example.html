@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/jquery-collision/js/jquery-collision.js"></script>
+    <script src="../js/jquery-ui-draggable-collision.js"></script>
+    <style>
+      .draggable { width:  60px; height:  60px; margin: 0; position: absolute; background-color: #428bca; }
+      .obstacle  { width: 100px; height: 100px; margin: 0; position: absolute; background-color: #d9534f; }
+      .restraint { width: 340px; height: 250px; margin: 0; position: absolute; background-color: #5cb85c; }
+      #board { height: 300px;  border: 0; border-collapse: collapse; position: relative; }
+      body { margin: 0px; padding: 0px; }
+    </style>
+    <script>
+      $(function() {
+            $( ".draggable" ).draggable({ containment: "body", obstacle: ".obstacle", preventCollision: true, restraint: ".restraint", preventProtrusion: true });
+      });
+    </script>
+  </head>
+  <body>
+      <div class="container">
+          <div class="col-md-12">
+              <h2>Drag blue block within green restraint and around red obstacles</h2>
+          </div>
+          <div class="col-md-6">
+              <div id="board" class="well">
+                  <div class="restraint"                   style="left: 30px; top: 25px;"></div>
+                  <div class="draggable ui-widget-content" style="left:100px; top: 50px;" id="b" ></div>
+                  <div class="draggable ui-widget-content" style="left:280px; top:  0px;" id="b" ></div>
+                  <div class="obstacle"                    style="left: 25px; top:115px;" id="a" ></div>
+                  <div class="obstacle"                    style="left:185px; top:160px;width:125px;height:125px;" id="c" ></div>
+              </div>
+          </div>
+      </body>
+</html>

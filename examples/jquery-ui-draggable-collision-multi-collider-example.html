@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/jquery-collision/js/jquery-collision.js"></script>
+    <script src="../js/jquery-ui-draggable-collision.js"></script>
+    <style>
+    .draggable { width: 120px; height: 120px; margin: 0; position: absolute; background-color: rgba( 0, 0, 0, 0.5 );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#88000000, endColorstr=#88000000); }
+        .collider  { width:  60px; height:  60px; margin: 0; position: absolute; background-color: #0000ff; }
+        .obstacle  { width: 100px; height: 100px; margin: 0; position: absolute; background-color: #ff0000; }
+        .restraint { width: 200px; height: 100px; margin: 0; position: absolute; background-color: #00ff00; }
+        .protrusion   { background-color: transparent; pointer-events: none; position: absolute; border: 1px solid black; margin: -1px; }
+        .collision    { background-color: #00ffff;     pointer-events: none; position: absolute;                                        }
+        .descc { display: block; position: relative; float: left; }
+        .descp { display: none; position: relative; float: left; }
+        #board { width: 400px; height: 400px; background-color: #888888; border: 0; border-collapse: collapse; margin: 0; position: absolute; }
+        </style>
+        <script>
+        function clearCollision(event,ui) { $(".collision").remove(); }
+        function handleCollision(event,ui)
+        {
+            $( event.collision ).addClass("collision").each( function(){ var d = $(this).data("direction"); if(d) $("<div class='descc'>"+d+"</div>").appendTo($(this));
+            $(this).appendTo("body"); } );
+            changedir(null);
+        }
+        function clearProtrusion(event,ui) { $(".protrusion").remove(); }
+        function handleProtrusion(event,ui)
+        {
+            $( event.collision ).addClass("protrusion").each( function(){ var d = $(this).data("direction"); if(d) $("<div class='descp'>"+d+"</div>").appendTo($(this));
+            $(this).appendTo("body"); } );
+            changedir(null);
+        }
+        $(function() {
+            $( ".draggable" ).each(function(){$(this).draggable({ containment: "#board", obstacle: ".obstacle", restraint: ".restraint",
+            directionData: "direction", collider: ".collider" });});
+            $( "#b" ).bind( "precollision",  clearCollision );
+            $( "#b" ).bind( "preprotrusion", clearProtrusion );
+            $( "#b" ).bind( "collision",  handleCollision );
+            $( "#b" ).bind( "protrusion", handleProtrusion );
+            changedir(null);
+        });
+        function changedir(event)
+        {
+            if( $("#directionality").val() == "collision" ) { $(".descc").css("display","block"); $(".descp").css("display","none" ); }
+                else                                            { $(".descc").css("display","none" ); $(".descp").css("display","block"); }
+                }
+                </script>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="row">
+                        <h2>Drag blue block outside green and on top of reds.</h2>
+                        <div class="alert alert-warning">
+                            <p>Unfortunately this example is broken for now.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="board">
+                                <div class="restraint"                   style="left: 50px; top: 50px;"></div>
+                                <div class="obstacle"                    style="left: 40px; top:170px;" id="a" ></div>
+                                <div class="obstacle"                    style="left:160px; top:200px;width:130px;height:130px;" id="c" ></div>
+                                <div class="draggable ui-widget-content" style="left:100px; top: 50px;" id="b" >
+                                    <div class="collider"                style="left:  0px; top:  0px;" ></div>
+                                    <div class="collider"                style="left: 60px; top: 60px;" ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="controls">
+                                <span>Show directionality:</span>
+                                <select id="directionality" onchange="changedir(event)">
+                                    <option value="collision">collision</option>
+                                    <option value="protrusion">protrusion</option>
+                                </select>
+                                <p>Turquoise areas show where blue and red meet.</p>
+                                <p>Black border areas show how much of blue extends beyond green.</p>
+                                <p>Select collision directionality to see what part of the red blocks are hit, and protrusion directionality to see
+                                    what side of the green area the blue is sticking out of.</p>
+                                    <p>for collisions, the direction is the part of the collider that hit the obstacle, for example, if
+                                        if bottom-left corner of the collider overlapped, the direction is "SW". If either the whole top side,
+                                        or a chunk of the top side that doesn't touch the edges, hits an obstacle, the direction is "N".
+                                        "Inside" means that the obstacle is entirely inside the colloder. "Outside" means that obstacle entirely
+                                        engulfs the collider.</p>
+                                        <p>For protrusions, the sections are
+                                            the extended direction of the obstacle from which the colliding entity is protruding. So the "S" protrusion is the
+                                            part that extends beyond the south edge of the obstacle.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </body>
+                        </html>

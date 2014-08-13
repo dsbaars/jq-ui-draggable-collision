@@ -2,13 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <script src="jquery-1.5.1.js"></script>
-    <script src="ui/jquery.ui.core.js"></script>
-    <script src="ui/jquery.ui.widget.js"></script>
-    <script src="ui/jquery.ui.mouse.js"></script>
-    <script src="ui/jquery.ui.draggable.js"></script>
-    <script src="jquery-collision.js"></script>
-    <script src="jquery-ui-draggable-collision.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/jquery-collision/js/jquery-collision.js"></script>
+    <script src="../js/jquery-ui-draggable-collision.js"></script>
     <style>
       .draggable { width: 120px; height: 120px; margin: 0; position: absolute;
                    background-color: rgba( 0, 0, 0, 0.5 );
@@ -20,11 +18,12 @@
     </style>
     <script>
       $(function() {
-            $( ".draggable" ).draggable({ containment: "#board", obstacle: ".obstacle", preventCollision: true, collider: ".collider" });
+            $( ".draggable" ).draggable({ containment: "body", obstacle: ".obstacle", preventCollision: true, collider: ".collider" });
       });
     </script>
   </head>
   <body>
+     <div class="container">
     <h2>Drag blue block sets around the red obstacles.</h2>
     <div id="board">
       <div class="draggable ui-widget-content" style="left:100px; top: 50px;" id="b" >
@@ -38,5 +37,6 @@
       <div class="obstacle"                    style="left: 40px; top:170px;" id="a" ></div>
       <div class="obstacle"                    style="left:160px; top:200px;width:130px;height:130px;" id="c" ></div>
     </div>
+</div>
   </body>
 </html>

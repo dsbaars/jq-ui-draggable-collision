@@ -2,13 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <script src="jquery-1.5.1.js"></script>
-    <script src="ui/jquery.ui.core.js"></script>
-    <script src="ui/jquery.ui.widget.js"></script>
-    <script src="ui/jquery.ui.mouse.js"></script>
-    <script src="ui/jquery.ui.draggable.js"></script>
-    <script src="jquery-collision.js"></script>
-    <script src="jquery-ui-draggable-collision.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/jquery-collision/js/jquery-collision.js"></script>
+    <script src="../js/jquery-ui-draggable-collision.js"></script>
     <style>
       .draggable { background-color: rgba( 0, 0, 0, 0.5 );
 		               filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#88000000, endColorstr=#88000000);
@@ -27,7 +25,7 @@
       function resetPlugin()
       {
         $( ".draggable" ).draggable({ collider: ".collider", collisionVisualDebug: $("#debug").val()=="true",
-	                                    obstacle: ".obstacle", preventCollision: true, 
+	                                    obstacle: ".obstacle", preventCollision: true,
                                       restraint: ".restraint", preventProtrusion: true,
 
 				                              multipleCollisionInteractions: [ { collider: ".collider2",
