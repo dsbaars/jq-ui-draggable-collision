@@ -1,6 +1,6 @@
 {
   "name": "jquery-ui-drag-collide",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Provides collision events while dragging, and handles collision-avoidance.",
   "main": "js/jquery-ui-draggable-collision.js",
   "directories": {

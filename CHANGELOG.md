@@ -1,3 +1,7 @@
+1.1.1
+----
+- No more use of jQuery UI shim repository
+
 1.1.0
 -----
 - Added bower.json
